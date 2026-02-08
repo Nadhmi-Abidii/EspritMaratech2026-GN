@@ -1,0 +1,105 @@
+<div class="volunteer-shell">
+  <mat-card class="hero-card">
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">Tableau de bord bénévole</p>
+        <h2>Bienvenue, {{ volunteerName }}</h2>
+        <p class="hero-subtitle">
+          Concentrez-vous sur les familles qui ont besoin de visites et du suivi des dons dans vos
+          zones assignées.
+        </p>
+        <p class="zone-chip">Zones assignées : {{ assignedZonesLabel }}</p>
+      </div>
+
+      <button mat-stroked-button type="button" (click)="reload()" [disabled]="loading">
+        Actualiser l'aperçu
+      </button>
+    </div>
+  </mat-card>
+
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <p class="error-text" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <section class="metric-grid">
+    <article class="metric-card" *ngFor="let metric of metrics" [attr.data-accent]="metric.accent">
+      <p class="metric-label">{{ metric.label }}</p>
+      <p class="metric-value">{{ metric.value }}</p>
+      <p class="metric-hint">{{ metric.hint }}</p>
+    </article>
+  </section>
+
+  <section class="content-grid">
+    <mat-card class="panel-card">
+      <mat-card-header>
+        <mat-card-title>Familles prioritaires</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="priority-list" *ngIf="priorityFamilies.length > 0; else noPriority">
+          <article
+            class="priority-item"
+            *ngFor="let family of priorityFamilies; trackBy: trackPriorityById"
+          >
+            <div class="priority-head">
+              <div>
+                <h3>{{ family.name }}</h3>
+                <p>{{ family.zone }}</p>
+              </div>
+              <div class="status-group">
+                <span [attr.data-status]="family.visited ? 'done' : 'pending'">
+                  {{ family.visited ? 'Visite effectuée' : 'Visite en attente' }}
+                </span>
+                <span [attr.data-status]="family.goalReached ? 'done' : 'pending'">
+                  {{ family.goalReached ? 'Objectif atteint' : 'Objectif en cours' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="progress-meta">
+              <span>{{ formatNumber(family.raised) }} / {{ formatNumber(family.goal) }}</span>
+              <span>{{ familyProgressPercent(family) }}%</span>
+            </div>
+
+            <div class="progress-track">
+              <div class="progress-fill" [style.width.%]="familyProgressPercent(family)"></div>
+            </div>
+          </article>
+        </div>
+
+        <ng-template #noPriority>
+          <p class="empty-text">Aucune famille prioritaire pour le moment.</p>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="panel-card">
+      <mat-card-header>
+        <mat-card-title>Visites récentes</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="visit-list" *ngIf="recentVisits.length > 0; else noVisits">
+          <article class="visit-item" *ngFor="let visit of recentVisits; trackBy: trackVisitById">
+            <p class="visit-family">{{ visit.familyName }}</p>
+            <p class="visit-date">{{ formatDate(visit.when) }}</p>
+            <p class="visit-notes">{{ visit.notes }}</p>
+          </article>
+        </div>
+
+        <ng-template #noVisits>
+          <p class="empty-text">Aucune visite récente enregistrée.</p>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <section class="action-grid">
+    <mat-card class="action-card" *ngFor="let action of quickActions">
+      <mat-card-content>
+        <h3>{{ action.title }}</h3>
+        <p>{{ action.description }}</p>
+        <a mat-flat-button color="primary" [routerLink]="[action.route]">{{ action.cta }}</a>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</div>

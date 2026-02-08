@@ -1,0 +1,224 @@
+<a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+<div class="public-page">
+  <nav class="top-nav">
+    <a class="brand" routerLink="/public/info">Omnia Charity</a>
+
+    <div class="nav-links" aria-label="Public navigation">
+      <a routerLink="/public/info">Accueil</a>
+      <a href="#impact">Impact</a>
+      <a href="#reports">Rapports</a>
+      <a href="#transparency">Transparence financiere</a>
+      <a class="staff-link" routerLink="/authentication/login">Connexion equipe</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="reports-top">
+    <div class="hero-content">
+      <span class="eyebrow">Rapports publics</span>
+      <h1>Rapports annuels et d'impact</h1>
+      <p>
+        Consultez et telechargez nos derniers rapports pour comprendre l'impact de vos contributions
+        et notre transparence financiere.
+      </p>
+      <div class="hero-actions">
+        <a mat-flat-button color="primary" href="#reports">Telecharger les rapports</a>
+        <a mat-stroked-button color="primary" routerLink="/public/info">Nous soutenir</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="state" *ngIf="loading" role="status" aria-live="polite" aria-atomic="true">
+    <mat-progress-spinner
+      diameter="42"
+      mode="indeterminate"
+      aria-label="Chargement"
+    ></mat-progress-spinner>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <p>Chargement des rapports...</p>
+  </section>
+
+  <section class="state error" *ngIf="!loading && errorMessage" role="alert" aria-atomic="true">
+    <h2>Impossible de charger les rapports</h2>
+    <p>{{ errorMessage }}</p>
+  </section>
+
+  <main id="main-content" class="content" *ngIf="!loading && !errorMessage">
+    <section class="panel" id="impact" *ngIf="impactSummary">
+      <div class="section-heading">
+        <h2>Apercu de l'impact</h2>
+        <p>Indicateurs publics sur la maniere dont les programmes soutiennent les familles selon les zones.</p>
+      </div>
+
+      <div class="summary-grid">
+        <article class="summary-card" *ngFor="let card of summaryCards">
+          <div class="icon-wrap">
+            <mat-icon aria-hidden="true">{{ card.icon }}</mat-icon>
+          </div>
+          <p class="value">{{ formatNumber(card.value) }}</p>
+          <p class="label">{{ card.label }}</p>
+        </article>
+      </div>
+
+      <article class="chart-card">
+        <div class="chart-title">
+          <h3>Familles aidees par zone</h3>
+          <p>Zones avec le plus grand nombre de familles enregistrees et accompagnees.</p>
+        </div>
+        <apx-chart
+          [series]="familiesByZoneChart.series"
+          [chart]="familiesByZoneChart.chart"
+          [xaxis]="familiesByZoneChart.xaxis"
+          [yaxis]="familiesByZoneChart.yaxis"
+          [plotOptions]="familiesByZoneChart.plotOptions"
+          [dataLabels]="familiesByZoneChart.dataLabels"
+          [legend]="familiesByZoneChart.legend"
+          [grid]="familiesByZoneChart.grid"
+          [colors]="familiesByZoneChart.colors"
+          [tooltip]="familiesByZoneChart.tooltip"
+        ></apx-chart>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <h2>Recherche et filtres</h2>
+        <p>Trouvez des rapports par mot-cle, type, ou annee de publication.</p>
+      </div>
+
+      <form class="filters" [formGroup]="filtersForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher des rapports</mat-label>
+          <input matInput formControlName="search" placeholder="Annuel, impact, transparence..." />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Type de rapport</mat-label>
+          <mat-select formControlName="type">
+            <mat-option value="all">Tous les types</mat-option>
+            <mat-option *ngFor="let type of availableTypes" [value]="type">
+              {{ formatReportType(type) }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Annee</mat-label>
+          <mat-select formControlName="year">
+            <mat-option value="all">Toutes les annees</mat-option>
+            <mat-option *ngFor="let year of availableYears" [value]="year.toString()">
+              {{ year }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button type="button" (click)="resetFilters()">Reinitialiser les filtres</button>
+      </form>
+    </section>
+
+    <section class="panel" id="reports">
+      <div class="section-heading inline">
+        <div>
+          <h2>Rapports disponibles</h2>
+          <p>{{ totalReports }} rapport(s) trouve(s).</p>
+        </div>
+
+        <p class="generated" *ngIf="generatedAt">Derniere mise a jour {{ formatDate(generatedAt) }}</p>
+      </div>
+
+      <div class="report-grid" *ngIf="reports.length; else noReports">
+        <article class="report-card" *ngFor="let report of reports">
+          <div class="report-header">
+            <span class="report-type">{{ formatReportType(report.type) }}</span>
+            <span class="report-year">{{ report.year }}</span>
+          </div>
+
+          <h3>{{ report.title }}</h3>
+          <p class="summary">{{ report.summary }}</p>
+          <p class="meta">Publie le {{ formatDate(report.publishedAt) }}</p>
+
+          <ul class="highlights">
+            <li *ngFor="let item of report.highlights">{{ item }}</li>
+          </ul>
+
+          <div class="actions">
+            <a mat-stroked-button color="primary" [href]="report.viewUrl" target="_blank" rel="noopener">
+              Voir le rapport
+            </a>
+            <a
+              mat-flat-button
+              color="primary"
+              [href]="report.downloadUrl"
+              [attr.download]="report.slug + '.pdf'"
+              rel="noopener"
+            >
+              Telecharger le PDF
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <ng-template #noReports>
+        <div class="empty">
+          <p>Aucun rapport ne correspond aux filtres selectionnes.</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <section class="panel transparency" *ngIf="financialSummary" id="transparency">
+      <div class="section-heading">
+        <h2>Transparence financiere</h2>
+        <p>Repartition visuelle claire de la maniere dont les dons estimes sont repartis et depenses.</p>
+      </div>
+
+      <div class="financial-grid">
+        <article class="chart-card">
+          <div class="chart-title">
+            <h3>Repartition des dons</h3>
+            <p>Distribution en pourcentage des fonds annuels estimes.</p>
+          </div>
+          <apx-chart
+            [series]="financialBreakdownChart.series"
+            [chart]="financialBreakdownChart.chart"
+            [labels]="financialBreakdownChart.labels"
+            [legend]="financialBreakdownChart.legend"
+            [dataLabels]="financialBreakdownChart.dataLabels"
+            [plotOptions]="financialBreakdownChart.plotOptions"
+            [colors]="financialBreakdownChart.colors"
+            [tooltip]="financialBreakdownChart.tooltip"
+            [stroke]="financialBreakdownChart.stroke"
+          ></apx-chart>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-title">
+            <h3>Dons et depenses annuels</h3>
+            <p>Total des dons estimes versus depenses estimees par annee.</p>
+          </div>
+          <apx-chart
+            [series]="donationTimelineChart.series"
+            [chart]="donationTimelineChart.chart"
+            [xaxis]="donationTimelineChart.xaxis"
+            [yaxis]="donationTimelineChart.yaxis"
+            [plotOptions]="donationTimelineChart.plotOptions"
+            [dataLabels]="donationTimelineChart.dataLabels"
+            [legend]="donationTimelineChart.legend"
+            [grid]="donationTimelineChart.grid"
+            [colors]="donationTimelineChart.colors"
+            [tooltip]="donationTimelineChart.tooltip"
+          ></apx-chart>
+        </article>
+      </div>
+
+      <div class="breakdown-grid">
+        <article class="breakdown-card" *ngFor="let item of financialSummary.breakdown">
+          <p class="label">{{ item.label }}</p>
+          <p class="value">{{ item.percentage }}%</p>
+          <p class="amount">{{ formatCurrency(item.amountEstimate) }}</p>
+        </article>
+      </div>
+
+      <p class="note">{{ financialSummary.note }}</p>
+    </section>
+  </main>
+</div>

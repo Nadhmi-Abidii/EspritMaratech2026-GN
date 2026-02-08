@@ -1,0 +1,110 @@
+.page-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.section-card {
+  border: 1px solid #e0e7ef;
+}
+
+.section-card mat-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+}
+
+.section-card mat-card-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.actions-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.info-text {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #607d8b;
+}
+
+.error-text {
+  margin: 0;
+  color: #d32f2f;
+}
+
+.table-tools {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(280px, 1fr);
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.filter-field,
+.search-field {
+  width: 100%;
+}
+
+.table-wrapper {
+  overflow: auto;
+}
+
+.charity-material-table {
+  width: 100%;
+  min-width: 900px;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.row-actions button {
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.row-actions button:hover {
+  transform: translateY(-1px);
+  background-color: rgba(2, 119, 189, 0.08);
+}
+
+.no-data-cell {
+  text-align: center;
+  color: #607d8b;
+  padding: 16px 8px;
+}
+
+@media (max-width: 900px) {
+  .form-grid,
+  .table-tools {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .charity-material-table {
+    min-width: 520px;
+  }
+}
+
+@media (max-width: 560px) {
+  .mat-column-quantity {
+    display: none;
+  }
+}

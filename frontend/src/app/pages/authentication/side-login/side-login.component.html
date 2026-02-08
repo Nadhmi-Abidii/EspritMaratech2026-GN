@@ -1,0 +1,114 @@
+<div class="blank-layout-container justify-content-center">
+  <div class="position-relative row w-100 h-100">
+    <div class="col-lg-7 col-xl-8 bg-gredient p-0">
+      <div class="p-24 h-100">
+        @if(options.theme === 'light') {
+        <a [routerLink]="['/charity/home']">
+          <img
+            src="./assets/image/omnia-removebg-preview.png"
+            class="align-middle m-2"
+            alt="logo"
+          />
+        </a>
+        } @if(options.theme === 'dark') {
+        <a [routerLink]="['/charity/home']">
+          <img
+            src="./assets/images/logos/light-logo.svg"
+            class="align-middle m-2"
+            alt="logo"
+          />
+        </a>
+        }
+
+        <div
+          class="align-items-center justify-content-center img-height d-none d-lg-flex"
+        >
+          <img
+            src="/assets/images/backgrounds/login-bg.svg"
+            alt="login"
+            style="max-width: 500px"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5 col-xl-4 p-0">
+      <div
+        class="p-32 d-flex align-items-start align-items-lg-center justify-content-center h-100"
+      >
+        <div class="row justify-content-center w-100">
+          <div class="col-lg-9 max-width-form">
+            <h4 class="f-w-700 f-s-24 m-0">Omnia Charity Tracking</h4>
+            <span class="f-s-14 d-block mat-body-1 m-t-8"
+              >Connectez-vous pour gerer les familles, les aides, les beneficiaires et les visites.</span
+            >
+
+            <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                >Email</mat-label
+              >
+              <mat-form-field
+                appearance="outline"
+                class="w-100"
+                color="primary"
+              >
+                <input matInput type="email" formControlName="email" />
+                @if(f['email'].touched && f['email'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if(f['email'].errors && f['email'].errors['required']) {
+                  <div class="text-error">Email requis.</div>
+                  } @if(f['email'].errors && f['email'].errors['email']) {
+                  <div class="text-error">Saisissez un email valide.</div>
+                  }
+                </mat-hint>
+                }
+              </mat-form-field>
+
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                >Mot de passe</mat-label
+              >
+              <mat-form-field
+                appearance="outline"
+                class="w-100"
+                color="primary"
+              >
+                <input matInput type="password" formControlName="password" />
+                @if(f['password'].touched && f['password'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if( f['password'].errors && f['password'].errors['required']) {
+                  <div class="text-error">Mot de passe requis.</div>
+                  }
+                  @if( f['password'].errors && f['password'].errors['minlength']) {
+                  <div class="text-error">Le mot de passe doit contenir au moins 8 caracteres.</div>
+                  }
+                </mat-hint>
+                }
+              </mat-form-field>
+
+              @if(loginError) {
+              <p class="text-error m-t-0 m-b-16">{{ loginError }}</p>
+              }
+
+              <div class="d-flex align-items-center gap-12">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="w-100"
+                  [disabled]="!form.valid || isSubmitting"
+                >
+                  Se connecter
+                </button>
+
+                @if(isSubmitting) {
+                <mat-progress-spinner
+                  diameter="24"
+                  mode="indeterminate"
+                ></mat-progress-spinner>
+                }
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

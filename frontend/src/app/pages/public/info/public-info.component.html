@@ -1,0 +1,483 @@
+<a class="skip-link" href="#main-content"
+  >Aller au contenu principal</a
+>
+
+<audio #voiceOver id="voice-over" preload="auto" hidden>
+  <source src="/assets/Audio/1770455266698700e28f3d7.mp3" type="audio/mpeg" />
+  Votre navigateur ne supporte pas l'element audio.
+</audio>
+
+<div class="public-page">
+  <nav class="top-nav">
+     <img
+        src="/assets/Image/omnia-removebg-preview.png"
+        width="60"
+        height="auto"
+       alt="Logo Omnia Charity"
+     />
+
+     <div class="nav-links" aria-label="Public navigation">
+       <a href="#overview">Accueil</a>
+       <a href="#impact">Impact</a>
+       <a href="#community">Campagnes de dons</a>
+       <a href="#faq">Aide & FAQ</a>
+       <a routerLink="/public/reports">Rapports</a>
+       <a class="staff-link" routerLink="/authentication/login">Connexion equipe</a>
+     </div>
+   </nav>
+
+  <section class="welcome-inline" *ngIf="showWelcomeVideo" aria-label="Video de bienvenue">
+    <div class="welcome-video-card">
+      <video
+        #welcomeVideo
+        class="welcome-video"
+        autoplay
+        muted
+        [controls]="welcomeVideoNeedsUserAction"
+        playsinline
+        preload="auto"
+        (ended)="onWelcomeVideoEnded()"
+        (error)="onWelcomeVideoError()"
+      >
+        <source src="/assets/video/Marhba.mp4" type="video/mp4" />
+        Votre navigateur ne supporte pas l'element video.
+      </video>
+      <p class="welcome-video-hint" *ngIf="welcomeVideoNeedsUserAction">
+        Si la video ne demarre pas, cliquez sur Lecture.
+      </p>
+    </div>
+  </section>
+
+  <header class="hero" id="overview">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Informations publiques</span>
+        <h1>{{ info?.organization?.fullName || 'Bienvenue chez Omnia Charity' }}</h1>
+        <p class="tagline">{{ info?.organization?.tagline || 'Aider les familles dans le besoin' }}</p>
+        <p>
+          {{
+            info?.organization?.mission ||
+              \"Notre mission est d'aider les familles dans le besoin en fournissant de la nourriture, des soins medicaux et un soutien a long terme, a travers des actions transparentes et documentees.\"
+          }}
+        </p>
+
+        <div class="hero-actions">
+          <a
+            mat-flat-button
+            color="primary"
+            [routerLink]="info?.callToAction?.primaryUrl || '/public/reports'"
+          >
+            {{ info?.callToAction?.primaryLabel || 'Soutenir notre cause' }}
+          </a>
+          <a mat-stroked-button routerLink="/public/reports">Voir les rapports</a>
+        </div>
+      </div>
+
+      <figure class="hero-media">
+        <img
+          src="/assets/Image/ominia.jpg"
+          alt="Benevoles apportant une aide essentielle aux familles"
+        />
+      </figure>
+    </div>
+  </header>
+
+  <section class="state" *ngIf="loading" role="status" aria-live="polite" aria-atomic="true">
+    <mat-progress-spinner
+      diameter="42"
+      mode="indeterminate"
+      aria-label="Chargement"
+    ></mat-progress-spinner>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <p>Chargement des informations publiques...</p>
+  </section>
+
+  <section class="state error" *ngIf="!loading && errorMessage" role="alert" aria-atomic="true">
+    <h2>Impossible de charger les informations publiques</h2>
+    <p>{{ errorMessage }}</p>
+  </section>
+
+  <main
+    id="main-content"
+    *ngIf="!loading && !errorMessage && info && impact && reportsPayload"
+    class="content"
+  >
+    <section class="panel" id="impact">
+      <div class="section-heading">
+        <h2>Impact en un coup d'oeil</h2>
+        <p>
+          Principaux indicateurs publics montrant les familles aidees, l'aide distribuee et la
+          couverture geographique des programmes Omnia Charity.
+        </p>
+      </div>
+
+      <div class="impact-cards">
+        <article
+          class="impact-card"
+          *ngFor="let card of impactCards"
+          [attr.data-accent]="card.accent"
+        >
+          <div class="icon-wrap">
+            <mat-icon aria-hidden="true">{{ card.icon }}</mat-icon>
+          </div>
+          <p class="value">{{ formatNumber(card.value) }}</p>
+          <p class="label">{{ card.label }}</p>
+        </article>
+      </div>
+
+      <div class="charts-grid">
+        <article class="chart-card">
+          <div class="chart-title">
+            <h3>Distribution de l'aide</h3>
+            <p>Nourriture, soins medicaux et aides specifiques distribues aux familles.</p>
+          </div>
+          <apx-chart
+            [series]="aidDistributionChart.series"
+            [chart]="aidDistributionChart.chart"
+            [labels]="aidDistributionChart.labels"
+            [legend]="aidDistributionChart.legend"
+            [dataLabels]="aidDistributionChart.dataLabels"
+            [plotOptions]="aidDistributionChart.plotOptions"
+            [colors]="aidDistributionChart.colors"
+            [tooltip]="aidDistributionChart.tooltip"
+            [stroke]="aidDistributionChart.stroke"
+          ></apx-chart>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-title">
+            <h3>Familles par zone</h3>
+            <p>Zones les plus servies selon les familles enregistrees.</p>
+          </div>
+          <apx-chart
+            [series]="familiesByAreaChart.series"
+            [chart]="familiesByAreaChart.chart"
+            [xaxis]="familiesByAreaChart.xaxis"
+            [yaxis]="familiesByAreaChart.yaxis"
+            [plotOptions]="familiesByAreaChart.plotOptions"
+            [dataLabels]="familiesByAreaChart.dataLabels"
+            [legend]="familiesByAreaChart.legend"
+            [grid]="familiesByAreaChart.grid"
+            [colors]="familiesByAreaChart.colors"
+            [tooltip]="familiesByAreaChart.tooltip"
+          ></apx-chart>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel posts-panel" id="community">
+      <div class="section-heading inline">
+        <div>
+          <h2>Campagnes de dons communautaires</h2>
+          <p>
+            Suivez nos objectifs, faites un don en temps reel, et suivez la progression des contributions.
+          </p>
+        </div>
+        <p class="live-badge">Mise a jour toutes les 7 secondes</p>
+      </div>
+
+      <div
+        class="donation-feedback"
+        *ngIf="donationFeedbackMessage"
+        [attr.data-tone]="donationFeedbackTone"
+        [attr.role]="donationFeedbackTone === 'error' ? 'alert' : 'status'"
+        [attr.aria-live]="donationFeedbackTone === 'error' ? 'assertive' : 'polite'"
+        aria-atomic="true"
+      >
+        <p>{{ donationFeedbackMessage }}</p>
+      </div>
+
+      <div class="state compact" *ngIf="isConfirmingDonation">
+        <mat-progress-spinner
+          diameter="28"
+          mode="indeterminate"
+          aria-label="Confirmation du don"
+        ></mat-progress-spinner>
+        <p>Confirmation de votre don avec le prestataire de paiement...</p>
+      </div>
+
+      <div class="state compact" *ngIf="postsLoading">
+        <mat-progress-spinner
+          diameter="36"
+          mode="indeterminate"
+          aria-label="Chargement des campagnes"
+        ></mat-progress-spinner>
+        <p>Chargement des campagnes de dons...</p>
+      </div>
+
+      <div
+        class="state error compact"
+        *ngIf="!postsLoading && postsErrorMessage"
+        role="alert"
+        aria-atomic="true"
+      >
+        <p>{{ postsErrorMessage }}</p>
+      </div>
+
+      <div class="post-grid" *ngIf="!postsLoading && posts.length; else noPostsYet">
+        <article class="post-card" *ngFor="let post of posts; trackBy: trackPostById" [attr.id]="'post-' + post._id">
+          <div class="post-meta">
+            <span>Publie le {{ formatDate(post.createdAt) }}</span>
+            <span *ngIf="post.createdBy">Par {{ post.createdBy.name }}</span>
+          </div>
+
+          <h3 [attr.id]="'post-title-' + post._id">{{ post.title }}</h3>
+          <p class="post-content">{{ post.content }}</p>
+
+          <div class="progress-header">
+            <p class="progress-percent">{{ formatProgress(post.progressPercent) }}</p>
+            <p class="progress-amount">
+              {{ formatPostCurrency(post.amountRaised) }} collectes sur {{ formatPostCurrency(post.donationGoal) }}
+            </p>
+          </div>
+
+          <div
+            class="progress-track"
+            role="progressbar"
+            [attr.aria-valuemin]="0"
+            [attr.aria-valuemax]="100"
+            [attr.aria-valuenow]="post.progressPercent"
+            [attr.aria-valuetext]="progressAriaValueText(post)"
+            [attr.aria-label]="post.title + ' - progression des dons'"
+          >
+            <div
+              class="progress-fill"
+              [attr.data-tone]="postProgressTone(post)"
+              [ngStyle]="progressBarStyle(post)"
+            >
+              <span>{{ formatProgress(post.progressPercent) }}</span>
+            </div>
+          </div>
+
+          <div class="post-stats">
+            <span>{{ formatPostCurrency(post.remainingAmount) }} restants</span>
+            <span>{{ post.donationCount }} contribution(s)</span>
+          </div>
+
+          <div class="post-actions">
+            <button mat-stroked-button type="button" (click)="sharePost(post)">Partager</button>
+
+            <div class="rib-info">
+              <mat-form-field appearance="outline" class="donation-field">
+                <mat-label>Donation to RIB: {{ donationRib }}</mat-label>
+                <input matInput type="text" [value]="donationRib" disabled />
+                <mat-hint>Use this RIB for donations via your bank transfer.</mat-hint>
+              </mat-form-field>
+            </div>
+
+            <button mat-flat-button color="primary" class="donation-cta" type="button" (click)="openDonationPopup(post)">
+              Make Donation
+            </button>
+          </div>
+
+          <p class="provider-note">Paiement securise.</p>
+        </article>
+      </div>
+
+      <ng-template #noPostsYet>
+        <div class="empty" *ngIf="!postsLoading && !postsErrorMessage">
+          <p>Aucune campagne de dons disponible pour le moment.</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <section class="panel support-panel" id="faq">
+      <div class="section-heading">
+        <h2>FAQ et assistance</h2>
+        <p>
+          Trouvez rapidement une reponse. Recherchez un mot-cle, ouvrez une question, ou discutez avec notre assistant.
+        </p>
+      </div>
+
+      <div class="faq-layout">
+        <div class="faq-main">
+          <mat-form-field appearance="outline" class="faq-search">
+            <mat-label>Rechercher dans la FAQ</mat-label>
+            <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+            <input matInput [formControl]="faqSearchControl" placeholder="don, rapports, mission..." />
+            <button
+              *ngIf="faqSearchControl.value"
+              mat-icon-button
+              matSuffix
+              type="button"
+              aria-label="Effacer la recherche"
+              (click)="faqSearchControl.setValue('')"
+            >
+              <mat-icon aria-hidden="true">close</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-accordion class="faq-accordion" multi="true">
+            <mat-expansion-panel *ngFor="let item of filteredFaqItems; trackBy: trackFaqById">
+              <mat-expansion-panel-header>
+                <mat-panel-title>{{ item.question }}</mat-panel-title>
+                <mat-panel-description *ngIf="item.tags.length">
+                  {{ item.tags.join(' / ') }}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <p class="faq-answer">{{ item.answer }}</p>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <div class="empty" *ngIf="!filteredFaqItems.length">
+            <p>Aucun resultat. Essayez un autre mot-cle ou contactez l'assistant.</p>
+          </div>
+        </div>
+
+        <aside class="faq-side">
+          <article class="help-card">
+            <h3>Contact rapide</h3>
+            <p>
+              Vous ne trouvez pas la reponse ? Ouvrez l'assistant Omnia (en bas a droite) et posez votre question.
+            </p>
+
+            <div class="help-actions">
+              <button mat-flat-button color="primary" type="button" (click)="openAssistant()">
+                Ouvrir l'assistant
+              </button>
+              <a mat-stroked-button href="#community">Voir les campagnes</a>
+              <a mat-stroked-button routerLink="/public/reports">Voir les rapports</a>
+            </div>
+
+            <p class="help-note">
+              L'assistant repond a partir des donnees publiques du projet (mission, campagnes, rapports, impact).
+            </p>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+  <div
+    class="donation-modal"
+    *ngIf="donationPopupOpen"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="donation-popup-title"
+    (click)="closeDonationPopup()"
+  >
+    <div class="donation-modal__card" (click)="$event.stopPropagation()">
+      <ng-container *ngIf="donationPopupPost as selected; else donationModalMissingPost">
+        <header class="donation-modal__header">
+          <div class="donation-modal__heading">
+            <h2 id="donation-popup-title">Make a Donation</h2>
+            <p class="donation-modal__subtitle">{{ selected.title }}</p>
+          </div>
+
+          <button
+            mat-icon-button
+            type="button"
+            class="donation-modal__close"
+            aria-label="Fermer le popup de don"
+            (click)="closeDonationPopup()"
+          >
+            <mat-icon aria-hidden="true">close</mat-icon>
+          </button>
+        </header>
+
+        <section class="donation-modal__progress" aria-label="Donation Progress">
+          <div class="donation-modal__progressHeader">
+            <p class="progress-percent">{{ formatProgress(selected.progressPercent) }}</p>
+            <p class="progress-amount">
+              {{ formatPostCurrency(selected.amountRaised) }} collectes sur {{ formatPostCurrency(selected.donationGoal) }}
+            </p>
+          </div>
+
+          <mat-progress-bar
+            class="donation-modal__progressBar"
+            mode="determinate"
+            [value]="selected.progressPercent"
+          ></mat-progress-bar>
+
+          <div class="donation-modal__progressMeta">
+            <span>{{ formatPostCurrency(selected.remainingAmount) }} restants</span>
+            <span>{{ selected.donationCount }} contribution(s)</span>
+          </div>
+        </section>
+
+        <form class="donation-modal__form" (ngSubmit)="submitDonation()">
+          <mat-form-field appearance="outline" class="donation-modal__amountField">
+            <mat-label>Enter Amount</mat-label>
+            <input
+              matInput
+              type="number"
+              min="1"
+              step="1"
+              inputmode="decimal"
+              autocomplete="off"
+              [formControl]="donationAmountControl"
+              [disabled]="donationCheckoutLoading"
+            />
+            <mat-hint>Montant minimum: 1</mat-hint>
+            <mat-error *ngIf="donationAmountControl.hasError('required')">Le montant est requis.</mat-error>
+            <mat-error *ngIf="donationAmountControl.hasError('min')">Le montant doit etre superieur a 0.</mat-error>
+          </mat-form-field>
+
+          <p
+            class="donation-modal__error"
+            *ngIf="donationCheckoutErrorMessage"
+            role="alert"
+            aria-atomic="true"
+          >
+            {{ donationCheckoutErrorMessage }}
+          </p>
+
+          <div class="donation-modal__actions">
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="donationCheckoutLoading || donationAmountControl.invalid"
+            >
+              <mat-progress-spinner
+                *ngIf="donationCheckoutLoading"
+                diameter="18"
+                mode="indeterminate"
+                aria-label="Traitement"
+              ></mat-progress-spinner>
+              <span>Donate Now</span>
+            </button>
+
+            <button
+              mat-stroked-button
+              type="button"
+              [disabled]="donationCheckoutLoading"
+              (click)="closeDonationPopup()"
+            >
+              Close
+            </button>
+          </div>
+
+          <p class="donation-modal__note">
+            Vous serez redirige vers le prestataire de paiement, puis ramene sur cette page pour confirmer le don.
+          </p>
+        </form>
+      </ng-container>
+
+      <ng-template #donationModalMissingPost>
+        <header class="donation-modal__header">
+          <div class="donation-modal__heading">
+            <h2 id="donation-popup-title">Make a Donation</h2>
+          </div>
+          <button
+            mat-icon-button
+            type="button"
+            class="donation-modal__close"
+            aria-label="Fermer le popup de don"
+            (click)="closeDonationPopup()"
+          >
+            <mat-icon aria-hidden="true">close</mat-icon>
+          </button>
+        </header>
+
+        <p class="donation-modal__error" role="alert" aria-atomic="true">
+          Impossible de charger la campagne selectionnee. Veuillez fermer puis reessayer.
+        </p>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<app-public-chatbot
+></app-public-chatbot>

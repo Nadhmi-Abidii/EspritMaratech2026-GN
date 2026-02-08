@@ -1,0 +1,26 @@
+.geo-map-wrapper {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.geo-map {
+  width: 100%;
+  min-height: 280px;
+}
+
+.map-hint {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.map-hint-top {
+  top: 12px;
+  bottom: auto;
+}

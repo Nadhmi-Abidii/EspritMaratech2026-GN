@@ -1,0 +1,1807 @@
+{
+  "baseUrl": "http://127.0.0.1:4201",
+  "viewports": [
+    {
+      "name": "mobile-xs",
+      "width": 320,
+      "height": 568
+    },
+    {
+      "name": "mobile-sm",
+      "width": 360,
+      "height": 640
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "mobile-lg",
+      "width": 414,
+      "height": 896
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "name": "laptop",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    }
+  ],
+  "results": [
+    {
+      "scenario": "public",
+      "route": "/public/info",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/info",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/info",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/info",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/info",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/info",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/info",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/reports",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/reports",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/reports",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/reports",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/reports",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/reports",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/public/reports",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/authentication/login",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/authentication/login",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/authentication/login",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/authentication/login",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/authentication/login",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/authentication/login",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "public",
+      "route": "/authentication/login",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/families",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/families",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/families",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/families",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/families",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/families",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/families",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/zones/zone_tunis/families",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/zones/zone_tunis/families",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/zones/zone_tunis/families",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/zones/zone_tunis/families",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/zones/zone_tunis/families",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/zones/zone_tunis/families",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/zones/zone_tunis/families",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/beneficiaries",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/beneficiaries",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/beneficiaries",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/beneficiaries",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/beneficiaries",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/beneficiaries",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/beneficiaries",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/aids",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/aids",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/aids",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/aids",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/aids",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/aids",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/aids",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/visits",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/visits",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/visits",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/visits",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/visits",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/visits",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/visits",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/admin",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/admin",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/admin",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/admin",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/admin",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/admin",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/posts",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/posts",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/posts",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/posts",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/posts",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/posts",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/posts",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/profile",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/profile",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/profile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/profile",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/profile",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/profile",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-admin",
+      "route": "/charity/profile",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-volunteer",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-volunteer",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-volunteer",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-volunteer",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-volunteer",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-volunteer",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-volunteer",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-coordinator",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile-xs",
+        "width": 320,
+        "height": 568
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 320,
+        "docClientWidth": 320,
+        "docScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "bodyScrollWidth": 320
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-coordinator",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile-sm",
+        "width": 360,
+        "height": 640
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 360,
+        "docClientWidth": 360,
+        "docScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "bodyScrollWidth": 360
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-coordinator",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 390,
+        "docClientWidth": 390,
+        "docScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-coordinator",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "mobile-lg",
+        "width": 414,
+        "height": 896
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 414,
+        "docClientWidth": 414,
+        "docScrollWidth": 414,
+        "bodyClientWidth": 414,
+        "bodyScrollWidth": 414
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-coordinator",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 768,
+        "docClientWidth": 768,
+        "docScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-coordinator",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1024,
+        "docClientWidth": 1024,
+        "docScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "bodyScrollWidth": 1024
+      },
+      "offenders": []
+    },
+    {
+      "scenario": "charity-coordinator",
+      "route": "/charity/home",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "ok": true,
+      "overflow": {
+        "viewportWidth": 1440,
+        "docClientWidth": 1440,
+        "docScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "offenders": []
+    }
+  ],
+  "generatedAt": "2026-02-07T22:42:40.606Z"
+}

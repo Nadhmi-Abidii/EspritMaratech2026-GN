@@ -1,0 +1,356 @@
+<div class="page-stack">
+  <!-- Card for creating or updating a family -->
+  <mat-card class="section-card">
+    <mat-card-header>
+      <mat-card-title>{{ isEditing ? 'Modifier la famille' : 'Ajouter une famille' }}</mat-card-title>
+      <button mat-button type="button" (click)="reloadFamilies()">Actualiser</button>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p *ngIf="!canCreateOrUpdate" class="info-text">
+        Vous pouvez consulter les familles, mais seuls les responsables et les administrateurs
+        peuvent les modifier.
+      </p>
+
+      <!-- Main form for creating/updating family -->
+      <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+        <!-- Name Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Nom de la famille</mat-label>
+          <input matInput formControlName="name" />
+          <mat-error *ngIf="isControlInvalid('name')">Ce champ est obligatoire.</mat-error>
+        </mat-form-field>
+
+        <!-- Address Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Adresse</mat-label>
+          <input matInput formControlName="address" />
+          <mat-error *ngIf="isControlInvalid('address')">Ce champ est obligatoire.</mat-error>
+        </mat-form-field>
+
+        <!-- Number of People Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre de personnes</mat-label>
+          <input matInput type="number" formControlName="numberOfPeople" />
+          <mat-error *ngIf="isControlInvalid('numberOfPeople')">Doit être supérieur ou égal à 1.</mat-error>
+        </mat-form-field>
+
+        <!-- Date of Birth Field (Family Head) -->
+        <mat-form-field appearance="outline">
+          <mat-label>Date de naissance (chef de famille)</mat-label>
+          <input matInput type="date" formControlName="date_de_naissance" [max]="maxBirthDate" />
+          <mat-error *ngIf="isControlInvalid('date_de_naissance')">
+            Veuillez saisir une date valide.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Number of Children Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre d'enfants</mat-label>
+          <input matInput type="number" min="0" formControlName="nombre_enfants" />
+          <mat-error *ngIf="isControlInvalid('nombre_enfants')">
+            Doit être un entier positif (ou nul).
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Monthly Income Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Revenu mensuel</mat-label>
+          <input matInput type="number" min="0" formControlName="revenu_mensuel" />
+          <mat-error *ngIf="isControlInvalid('revenu_mensuel')">Doit être un nombre positif.</mat-error>
+        </mat-form-field>
+
+        <!-- Housing Situation Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Situation de logement</mat-label>
+          <mat-select formControlName="situation_logement">
+            <mat-option *ngFor="let option of housingSituationOptions" [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="isControlInvalid('situation_logement')">Ce champ est obligatoire.</mat-error>
+        </mat-form-field>
+
+        <!-- Postal Code Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Code postal</mat-label>
+          <input matInput formControlName="postalCode" />
+          <mat-error *ngIf="isControlInvalid('postalCode')">Ce champ est obligatoire.</mat-error>
+        </mat-form-field>
+
+        <!-- Zone Field -->
+        <ng-container *ngIf="zones.length > 0; else manualZoneInput">
+          <mat-form-field appearance="outline">
+            <mat-label>Zone</mat-label>
+            <mat-select formControlName="zoneId">
+              <mat-option *ngFor="let zone of zones; trackBy: trackZoneById" [value]="zone._id">
+                {{ zoneLabel(zone) }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="isControlInvalid('zoneId')">Ce champ est obligatoire.</mat-error>
+          </mat-form-field>
+        </ng-container>
+
+        <ng-template #manualZoneInput>
+          <mat-form-field appearance="outline">
+            <mat-label>Zone</mat-label>
+            <input matInput formControlName="zone" placeholder="ex. Sfax" />
+            <mat-hint>Aucune zone disponible. Saisissez un nom de zone pour la créer ou l'utiliser.</mat-hint>
+            <mat-error *ngIf="isControlInvalid('zone')">Ce champ est obligatoire.</mat-error>
+          </mat-form-field>
+        </ng-template>
+
+        <!-- Phone Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Téléphone</mat-label>
+          <input matInput formControlName="phone" />
+          <mat-error *ngIf="isControlInvalid('phone')">Ce champ est obligatoire.</mat-error>
+        </mat-form-field>
+
+        <!-- Email Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error *ngIf="isControlInvalid('email')">Veuillez saisir un e-mail valide.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Objectif de don</mat-label>
+          <input matInput type="number" min="0" formControlName="donationGoal" />
+          <mat-error *ngIf="isControlInvalid('donationGoal')">Doit être supérieur ou égal à 0.</mat-error>
+        </mat-form-field>
+
+        <!-- Observations Field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Observations</mat-label>
+          <textarea matInput rows="3" formControlName="observations"></textarea>
+        </mat-form-field>
+
+        <!-- Coordinates (Latitude and Longitude) -->
+        <div class="coordinates-row full-width">
+          <mat-form-field appearance="outline">
+            <mat-label>Latitude</mat-label>
+            <input matInput type="number" formControlName="latitude" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Longitude</mat-label>
+            <input matInput type="number" formControlName="longitude" />
+          </mat-form-field>
+        </div>
+
+        <!-- Clear coordinates button -->
+        <div class="full-width map-picker-actions">
+          <button mat-stroked-button type="button" (click)="clearCoordinates()" [disabled]="!canCreateOrUpdate">
+            Effacer les coordonnées
+          </button>
+        </div>
+
+        <!-- Map component for selecting coordinates -->
+        <div class="full-width">
+          <app-geo-map
+            [families]="[]"
+            [visits]="[]"
+            [selectable]="canCreateOrUpdate"
+            [selectedPoint]="mapPickerPoint"
+            [height]="'260px'"
+            (pointSelected)="setCoordinates($event)"
+          ></app-geo-map>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="actions-row full-width">
+          <button mat-flat-button color="primary" type="submit" [disabled]="isSubmitting || !canCreateOrUpdate">
+            {{ isEditing ? 'Enregistrer les modifications' : 'Enregistrer' }}
+          </button>
+
+          <button mat-stroked-button type="button" (click)="clearForm()" [disabled]="isSubmitting || !canCreateOrUpdate">
+            Réinitialiser
+          </button>
+
+          <mat-progress-spinner *ngIf="isSubmitting" diameter="24" mode="indeterminate"></mat-progress-spinner>
+        </div>
+
+        <p class="error-text" *ngIf="errorMessage" role="alert" aria-atomic="true">
+          {{ errorMessage }}
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Card for displaying family data -->
+  <mat-card class="section-card">
+    <mat-card-header>
+      <mat-card-title>Liste des familles</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="table-tools">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Rechercher des familles</mat-label>
+          <input matInput #filterInput (input)="applyFilter(filterInput.value)" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Filtrer par type d'aide</mat-label>
+          <mat-select [value]="selectedAidTypeFilter" (selectionChange)="onAidTypeFilterChange($event.value)">
+            <mat-option value="">Tous les types d'aide</mat-option>
+            <mat-option *ngFor="let type of aidOptions" [value]="type">
+              {{ familyAidLabel(type) }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-progress-bar *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
+
+      <div class="table-wrapper">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 charity-material-table">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Famille</th>
+            <td mat-cell *matCellDef="let family">
+              <div class="primary-cell">
+                <strong>{{ family.name }}</strong>
+                <span>{{ family.zone }} - {{ family.postalCode }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse</th>
+            <td mat-cell *matCellDef="let family">{{ family.address }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="aidTypes">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type d'aide</th>
+            <td mat-cell *matCellDef="let family">{{ formatAidTypes(family.aidTypes) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="donationProgress">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Progression des dons</th>
+            <td mat-cell *matCellDef="let family">
+              <div class="primary-cell">
+                <span>{{ donationProgressLabel(family) }}</span>
+                <span>{{ familyGoalReachedLabel(family) }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="visited">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut de visite</th>
+            <td mat-cell *matCellDef="let family">{{ familyVisitedLabel(family) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="numberOfPeople">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de personnes</th>
+            <td mat-cell *matCellDef="let family">{{ family.numberOfPeople }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="date_de_naissance">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date de naissance</th>
+            <td mat-cell *matCellDef="let family">{{ formatDate(family.date_de_naissance) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="lastVisit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date de dernière visite</th>
+            <td mat-cell *matCellDef="let family">{{ formatDateTime(lastVisitDateForFamily(family._id)) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="household">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Détails du foyer</th>
+            <td mat-cell *matCellDef="let family">
+              <div class="primary-cell">
+                <span>Enfants : {{ family.nombre_enfants ?? 0 }}</span>
+                <span>Occupation : {{ family.occupation || '-' }}</span>
+                <span>Revenu : {{ formatRevenue(family.revenu_mensuel) }}</span>
+                <span>{{ housingSituationLabel(family.situation_logement) }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let family">
+              <div class="row-actions">
+                <button
+                  *ngIf="canCreateOrUpdate"
+                  mat-icon-button
+                  color="primary"
+                  matTooltip="Modifier la famille"
+                  (click)="editFamily(family)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+
+                <button
+                  *ngIf="canDelete"
+                  mat-icon-button
+                  color="warn"
+                  matTooltip="Supprimer la famille"
+                  (click)="deleteFamily(family)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section-card map-section-card">
+    <mat-card-header>
+      <mat-card-title>Carte des familles et des coordonnées</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p class="info-text">
+        Familles avec coordonnées : {{ mappedFamilies.length }} | Visites avec coordonnées :
+        {{ mappedVisits.length }}
+      </p>
+
+      <div class="map-layout">
+        <div class="map-pane">
+          <app-geo-map
+            [families]="mappedFamilies"
+            [visits]="mappedVisits"
+            [height]="'420px'"
+          ></app-geo-map>
+        </div>
+
+        <div class="map-table-pane">
+          <div class="table-wrapper">
+            <table class="charity-material-table">
+              <thead>
+                <tr>
+                  <th>Famille</th>
+                  <th>Zone</th>
+                  <th>Coordonnées</th>
+                  <th>Dernière visite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let family of mappedFamilies; trackBy: trackFamilyById">
+                  <td>{{ family.name }}</td>
+                  <td>{{ family.zone || '-' }}</td>
+                  <td>{{ formatCoordinates(family) }}</td>
+                  <td>{{ formatDateTime(lastVisitDateForFamily(family._id)) }}</td>
+                </tr>
+                <tr *ngIf="mappedFamilies.length === 0">
+                  <td colspan="4" class="empty-cell">Aucune famille avec des coordonnées pour le moment.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>

@@ -1,0 +1,545 @@
+<div class="dashboard-stack">
+  <mat-card class="top-bar-card">
+    <div class="top-bar-content">
+      <div class="title-block">
+        <p class="eyebrow">Suivi Omnia Charity</p>
+        <h2>Tableau de bord admin</h2>
+        <p>Familles, bénéficiaires, visites et distribution d'aide en un coup d'oeil.</p>
+      </div>
+
+      <div class="top-bar-actions" *ngIf="(currentUser$ | async) as user">
+        <div class="admin-meta">
+          <span class="label">Connecté en tant que</span>
+          <span class="name">{{ user.name }}</span>
+        </div>
+
+        <button mat-stroked-button type="button" (click)="reloadDashboardData()">
+          Actualiser
+        </button>
+        <button mat-flat-button color="warn" type="button" (click)="logout()">Déconnexion</button>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-progress-bar *ngIf="isDashboardLoading" mode="indeterminate"></mat-progress-bar>
+
+  <p class="error-text" *ngIf="errorMessage">{{ errorMessage }}</p>
+  <div class="error-list" *ngIf="dashboardErrors.length > 0">
+    <p *ngFor="let error of dashboardErrors">{{ error }}</p>
+  </div>
+
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <p class="stat-label">Total familles</p>
+      <p class="stat-value">{{ stats.families }}</p>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <p class="stat-label">Total bénéficiaires</p>
+      <p class="stat-value">{{ stats.beneficiaries }}</p>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <p class="stat-label">Total visites</p>
+      <p class="stat-value">{{ stats.visits }}</p>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <p class="stat-label">Total aides</p>
+      <p class="stat-value">{{ stats.aids }}</p>
+    </mat-card>
+  </div>
+
+  <div class="charts-grid">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Familles, bénéficiaires, visites et aides</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <apx-chart
+          [series]="activityChart.series!"
+          [chart]="activityChart.chart!"
+          [labels]="activityChart.labels!"
+          [legend]="activityChart.legend!"
+          [dataLabels]="activityChart.dataLabels!"
+          [plotOptions]="activityChart.plotOptions!"
+          [stroke]="activityChart.stroke!"
+          [colors]="activityChart.colors!"
+        ></apx-chart>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Résumé de la distribution des aides</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <apx-chart
+          [series]="aidSummaryChart.series!"
+          [chart]="aidSummaryChart.chart!"
+          [xaxis]="aidSummaryChart.xaxis!"
+          [legend]="aidSummaryChart.legend!"
+          [dataLabels]="aidSummaryChart.dataLabels!"
+          [plotOptions]="aidSummaryChart.plotOptions!"
+          [stroke]="aidSummaryChart.stroke!"
+          [colors]="aidSummaryChart.colors!"
+        ></apx-chart>
+
+        <div class="aid-totals">
+          <span>Alimentaire : {{ aidTotals.alimentaire }}</span>
+          <span>Médicaments : {{ aidTotals.medication }}</span>
+          <span>Aide spécifique : {{ aidTotals.aide_specifique }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="overview-grid">
+    <mat-card class="section-card">
+      <mat-card-header>
+        <mat-card-title>Aperçu gestion des familles</mat-card-title>
+        <div class="section-actions">
+          <a mat-flat-button color="primary" [routerLink]="['/charity/families']">Ajouter une famille</a>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="section-meta">Total familles : {{ familiesSnapshot.length }}</p>
+
+        <div class="table-scroll">
+          <table class="overview-table">
+            <thead>
+              <tr>
+                <th>Famille</th>
+                <th>Adresse</th>
+                <th>Date de naissance</th>
+                <th>Enfants</th>
+                <th>Occupation</th>
+                <th>Revenu mensuel</th>
+                <th>Situation de logement</th>
+                <th>Type d'aide fournie</th>
+                <th>Nombre de membres</th>
+                <th>Dernière visite</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let family of familiesSnapshot; trackBy: trackFamilyById">
+                <td>{{ family.name }}</td>
+                <td>{{ family.address }}</td>
+                <td>{{ formatDate(family.date_de_naissance) }}</td>
+                <td>{{ family.nombre_enfants ?? '-' }}</td>
+                <td>{{ family.occupation || '-' }}</td>
+                <td>{{ formatRevenue(family.revenu_mensuel) }}</td>
+                <td>{{ familyHousingLabel(family.situation_logement) }}</td>
+                <td>{{ familyAidList(family) }}</td>
+                <td>{{ family.numberOfPeople }}</td>
+                <td>{{ familyLastVisit(family._id) }}</td>
+              </tr>
+              <tr *ngIf="familiesSnapshot.length === 0">
+                <td colspan="10" class="empty-cell">Aucune famille trouvée.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section-card">
+      <mat-card-header>
+        <mat-card-title>Aperçu gestion des bénéficiaires</mat-card-title>
+        <div class="section-actions">
+          <a mat-flat-button color="primary" [routerLink]="['/charity/beneficiaries']">
+            Ajouter un bénéficiaire
+          </a>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="section-meta">Total bénéficiaires : {{ beneficiariesSnapshot.length }}</p>
+
+        <div class="table-scroll">
+          <table class="overview-table">
+            <thead>
+              <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>État de santé</th>
+                <th>Famille</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let beneficiary of beneficiariesSnapshot; trackBy: trackBeneficiaryById">
+                <td>{{ beneficiary.firstName }}</td>
+                <td>{{ beneficiary.lastName }}</td>
+                <td>{{ beneficiaryHealthLabel(beneficiary) }}</td>
+                <td>{{ familyName(beneficiary.famille) }}</td>
+              </tr>
+              <tr *ngIf="beneficiariesSnapshot.length === 0">
+                <td colspan="4" class="empty-cell">Aucun bénéficiaire trouvé.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section-card">
+      <mat-card-header>
+        <mat-card-title>Aperçu gestion des visites</mat-card-title>
+        <div class="section-actions">
+          <a mat-flat-button color="primary" [routerLink]="['/charity/visits']">Ajouter une visite</a>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="section-meta">
+          Visites récentes affichées : {{ recentVisits.length }} sur {{ visitsSnapshot.length }}
+        </p>
+
+        <div class="table-scroll">
+          <table class="overview-table">
+            <thead>
+              <tr>
+                <th>Date de visite</th>
+                <th>Famille</th>
+                <th>Aide distribuée</th>
+                <th>Bénévole</th>
+                <th>Observations</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let visit of recentVisits; trackBy: trackVisitById">
+                <td>{{ formatDateTime(visit.visitDate) }}</td>
+                <td>{{ familyName(visit.famille) }}</td>
+                <td>{{ visitAidSummary(visit) }}</td>
+                <td>{{ visitVolunteerName(visit) }}</td>
+                <td>{{ visit.notes || '-' }}</td>
+              </tr>
+              <tr *ngIf="recentVisits.length === 0">
+                <td colspan="5" class="empty-cell">Aucune visite trouvée.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section-card">
+      <mat-card-header>
+        <mat-card-title>Aperçu distribution des aides</mat-card-title>
+        <div class="section-actions">
+          <a mat-flat-button color="primary" [routerLink]="['/charity/aids']">Ajouter une aide</a>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="section-meta">Total enregistrements d'aide : {{ aidsSnapshot.length }}</p>
+
+        <div class="table-scroll">
+          <table class="overview-table">
+            <thead>
+              <tr>
+                <th>Famille</th>
+                <th>Type d'aide</th>
+                <th>Quantité</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let aid of aidsSnapshot; trackBy: trackAidById">
+                <td>{{ familyName(aid.famille) }}</td>
+                <td>{{ aidTypeLabel(aid.type) }}</td>
+                <td>{{ aid.quantity }}</td>
+                <td>{{ formatDateTime(aid.aidDate) }}</td>
+              </tr>
+              <tr *ngIf="aidsSnapshot.length === 0">
+                <td colspan="4" class="empty-cell">Aucun enregistrement d'aide trouvé.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section-card">
+      <mat-card-header>
+        <mat-card-title>Responsables de zone</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="section-meta">Total zones : {{ zonesSnapshot.length }}</p>
+
+        <form class="user-form" [formGroup]="zoneResponsibleForm" (ngSubmit)="createZoneResponsibleFromDashboard()">
+          <mat-form-field appearance="outline">
+            <mat-label>Nom de la zone</mat-label>
+            <input matInput formControlName="zoneName" placeholder="Sfax" />
+            <mat-error *ngIf="zoneResponsibleForm.controls.zoneName.hasError('required')">
+              Le nom de la zone est obligatoire.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nom du responsable</mat-label>
+            <input matInput formControlName="responsibleName" />
+            <mat-error *ngIf="zoneResponsibleForm.controls.responsibleName.hasError('required')">
+              Le nom du responsable est obligatoire.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>E-mail du responsable</mat-label>
+            <input matInput type="email" formControlName="responsibleEmail" />
+            <mat-error *ngIf="zoneResponsibleForm.controls.responsibleEmail.hasError('required')">
+              L'e-mail du responsable est obligatoire.
+            </mat-error>
+            <mat-error *ngIf="zoneResponsibleForm.controls.responsibleEmail.hasError('email')">
+              Saisissez un e-mail valide.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Téléphone du responsable</mat-label>
+            <input matInput formControlName="responsiblePhone" />
+            <mat-error *ngIf="zoneResponsibleForm.controls.responsiblePhone.hasError('required')">
+              Le téléphone du responsable est obligatoire.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Mot de passe temporaire</mat-label>
+            <input matInput type="password" formControlName="responsiblePassword" />
+            <mat-error *ngIf="zoneResponsibleForm.controls.responsiblePassword.hasError('required')">
+              Le mot de passe est obligatoire.
+            </mat-error>
+            <mat-error *ngIf="zoneResponsibleForm.controls.responsiblePassword.hasError('minlength')">
+              Minimum 8 caractères.
+            </mat-error>
+          </mat-form-field>
+
+          <div class="user-form-actions">
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="zoneResponsibleForm.invalid || isCreatingZone || isZoneLoading"
+            >
+              Créer un responsable de zone
+            </button>
+          </div>
+        </form>
+
+        <mat-progress-bar *ngIf="isZoneLoading" mode="indeterminate"></mat-progress-bar>
+
+        <p class="success-text user-feedback" *ngIf="zoneSuccessMessage">{{ zoneSuccessMessage }}</p>
+        <p class="error-text user-feedback" *ngIf="zoneErrorMessage">{{ zoneErrorMessage }}</p>
+
+        <div class="table-scroll">
+          <table class="overview-table">
+            <thead>
+              <tr>
+                <th>Zone</th>
+                <th>Responsable</th>
+                <th>E-mail</th>
+                <th>Téléphone</th>
+                <th>Familles</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let zone of zonesSnapshot; trackBy: trackZoneById">
+                <td>{{ zone.name }}</td>
+                <td>{{ zone.responsible?.name || '-' }}</td>
+                <td>{{ zone.responsible?.email || '-' }}</td>
+                <td>{{ zone.responsible?.phone || '-' }}</td>
+                <td>{{ zone.assignedFamilies.length }}</td>
+                <td>
+                  <button
+                    mat-stroked-button
+                    color="warn"
+                    type="button"
+                    (click)="deleteZone(zone)"
+                    [disabled]="isZoneLoading"
+                  >
+                    Supprimer
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="zonesSnapshot.length === 0">
+                <td colspan="6" class="empty-cell">Aucune zone trouvée.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section-card">
+      <mat-card-header>
+        <mat-card-title>Aperçu gestion des utilisateurs</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="section-meta">Total utilisateurs : {{ usersSnapshot.length }}</p>
+
+        <form class="user-form" [formGroup]="userForm" (ngSubmit)="createUserFromDashboard()">
+          <mat-form-field appearance="outline">
+            <mat-label>Nom</mat-label>
+            <input matInput formControlName="name" />
+            <mat-error *ngIf="userForm.controls.name.hasError('required')">Le nom est obligatoire.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>E-mail</mat-label>
+            <input matInput type="email" formControlName="email" />
+            <mat-error *ngIf="userForm.controls.email.hasError('required')">L'e-mail est obligatoire.</mat-error>
+            <mat-error *ngIf="userForm.controls.email.hasError('email')">Saisissez un e-mail valide.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Téléphone</mat-label>
+            <input matInput formControlName="phone" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" formControlName="password" />
+            <mat-error *ngIf="userForm.controls.password.hasError('required')">
+              Le mot de passe est obligatoire.
+            </mat-error>
+            <mat-error *ngIf="userForm.controls.password.hasError('minlength')">
+              Minimum 8 caractères.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Rôle</mat-label>
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let role of userRoles" [value]="role">
+                {{ roleLabel(role) }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="zones-field">
+            <mat-label>Zones assignées</mat-label>
+            <input
+              matInput
+              formControlName="assignedZones"
+              placeholder="exemple : Ariana, Tunis, Sfax"
+            />
+            <mat-hint>Séparez plusieurs zones par des virgules.</mat-hint>
+          </mat-form-field>
+
+          <mat-checkbox formControlName="isActive">Compte actif</mat-checkbox>
+
+          <div class="user-form-actions">
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="userForm.invalid || isCreatingUser || isUserLoading"
+            >
+              Ajouter un utilisateur
+            </button>
+          </div>
+        </form>
+
+        <mat-progress-bar *ngIf="isUserLoading" mode="indeterminate"></mat-progress-bar>
+
+        <p class="success-text user-feedback" *ngIf="userSuccessMessage">{{ userSuccessMessage }}</p>
+        <p class="error-text user-feedback" *ngIf="userErrorMessage">{{ userErrorMessage }}</p>
+
+        <div class="table-scroll">
+          <table class="overview-table">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>E-mail</th>
+                <th>Rôle</th>
+                <th>Statut</th>
+                <th>Zones</th>
+                <th>Créé le</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of usersSnapshot; trackBy: trackUserById">
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ roleLabel(user.role) }}</td>
+                <td>{{ user.isActive ? 'Actif' : 'Inactif' }}</td>
+                <td>{{ userZonesLabel(user) }}</td>
+                <td>{{ formatDateTime(user.createdAt) }}</td>
+                <td>
+                  <button
+                    mat-stroked-button
+                    color="warn"
+                    type="button"
+                    (click)="deleteUser(user)"
+                    [disabled]="isUserLoading"
+                  >
+                    Supprimer
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="usersSnapshot.length === 0">
+                <td colspan="7" class="empty-cell">Aucun utilisateur trouvé.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="section-card map-section-card">
+    <mat-card-header>
+      <mat-card-title>Carte des familles et des coordonnées</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p class="section-meta">
+        Familles avec coordonnées : {{ mappedFamilies.length }} | Visites avec coordonnées :
+        {{ mappedVisits.length }}
+      </p>
+
+      <div class="map-layout">
+        <div class="map-pane">
+          <app-geo-map
+            [families]="mappedFamilies"
+            [visits]="mappedVisits"
+            [height]="'420px'"
+          ></app-geo-map>
+        </div>
+
+        <div class="map-table-pane">
+          <div class="table-scroll">
+            <table class="overview-table">
+              <thead>
+                <tr>
+                  <th>Famille</th>
+                  <th>Zone</th>
+                  <th>Coordonnées</th>
+                  <th>Dernière visite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let family of mappedFamilies; trackBy: trackFamilyById">
+                  <td>{{ family.name }}</td>
+                  <td>{{ family.zone || '-' }}</td>
+                  <td>{{ formatCoordinates(family) }}</td>
+                  <td>{{ familyLastVisit(family._id) }}</td>
+                </tr>
+                <tr *ngIf="mappedFamilies.length === 0">
+                  <td colspan="4" class="empty-cell">
+                    Aucune famille avec des coordonnées pour le moment.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

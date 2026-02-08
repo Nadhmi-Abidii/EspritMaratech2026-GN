@@ -1,0 +1,124 @@
+<span [dir]="options.dir!">
+  <mat-sidenav-container class="mainWrapper" autosize autoFocus [ngClass]="{
+    'sidebarNav-mini': options.sidenavCollapsed && options.navPos !== 'top' &&  !resView,
+    'sidebarNav-horizontal': options.horizontal,
+    cardBorder: options.cardBorder,
+    orange_theme: options.activeTheme == 'orange_theme',
+    blue_theme: options.activeTheme == 'blue_theme',
+    aqua_theme: options.activeTheme == 'aqua_theme',
+    purple_theme: options.activeTheme == 'purple_theme',
+    green_theme: options.activeTheme == 'green_theme',
+    cyan_theme: options.activeTheme == 'cyan_theme'
+  }">
+    <!-- ============================================================== -->
+    <!-- Vertical Sidebar -->
+    <!-- ============================================================== -->
+    @if (!options.horizontal) {
+    <mat-sidenav #leftsidenav [mode]="isOver ? 'over' : 'side'"
+      [opened]="options.navPos === 'side' && options.sidenavOpened && !isOver && !resView"
+      (openedChange)="onSidenavOpenedChange($event)" (closedStart)="onSidenavClosedStart()" class="sidebarNav">
+      <div class="flex-layout">
+        <app-sidebar (toggleMobileNav)="sidenav.toggle()" [showToggle]="isOver"></app-sidebar>
+        <ng-scrollbar class="position-relative" style="height: 100%">
+          <mat-nav-list class="sidebar-list">
+            @for(item of filteredNavItems; track item) {
+            <app-nav-item [item]="item" (notify)="sidenav.toggle()">
+            </app-nav-item>
+            }
+          </mat-nav-list>
+        </ng-scrollbar>
+        <div class="p-24 m-t-auto profile-bar">
+          <div class="bg-light-accent d-flex align-items-center rounded p-16">
+            <img src="/assets/images/profile/user-1.jpg" class="rounded-circle" width="40" />
+            <div class="m-l-16">
+              <h5 class="mat-subtitle-2 f-w-600">{{ currentUser?.name || 'Invité' }}</h5>
+              <span class="f-s-12">{{ currentUser?.role || 'Aucun rôle' }}</span>
+            </div>
+            <div class="m-l-auto">
+              <button mat-icon-button (click)="logout()" class="d-flex justify-content-center">
+                <i-tabler name="power" class="text-primary icon-18 d-flex"></i-tabler>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-sidenav>
+    }
+
+    <!-- ============================================================== -->
+    <!-- horizontal Sidebar -->
+    <!-- ============================================================== -->
+    @if (resView) {
+    <mat-sidenav #leftsidenav [mode]="'over'" [opened]="options.sidenavOpened && !isTablet"
+      (openedChange)="onSidenavOpenedChange($event)" (closedStart)="onSidenavClosedStart()" class="sidebarNav">
+      <app-sidebar> </app-sidebar>
+      <ng-scrollbar class="position-relative" style="height: 100%">
+        <mat-nav-list class="sidebar-list">
+          @for(item of filteredNavItems; track item) {
+          <app-nav-item [item]="item" (notify)="sidenav.toggle()"> </app-nav-item>
+          }
+        </mat-nav-list>
+      </ng-scrollbar>
+      <div class="p-24 m-t-auto profile-bar">
+        <div class="bg-light-accent d-flex align-items-center rounded p-16">
+          <img src="/assets/images/profile/user-1.jpg" class="rounded-circle" width="40" />
+          <div class="m-l-16">
+            <h5 class="mat-subtitle-2 f-w-600">{{ currentUser?.name || 'Invité' }}</h5>
+            <span class="f-s-12">{{ currentUser?.role || 'Aucun rôle' }}</span>
+          </div>
+          <div class="m-l-auto">
+            <button mat-icon-button (click)="logout()" class="d-flex justify-content-center">
+              <i-tabler name="power" class="text-primary icon-18 d-flex"></i-tabler>
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-sidenav>
+    }
+
+    <!-- ============================================================== -->
+    <!-- Main Content -->
+    <!-- ============================================================== -->
+    <mat-sidenav-content class="contentWrapper" #content>
+      <!-- ============================================================== -->
+      <!-- VerticalHeader -->
+      <!-- ============================================================== -->
+      @if (!options.horizontal) {
+      <app-header [showToggle]="!isOver" (toggleCollapsed)="toggleCollapsed()" (toggleMobileNav)="sidenav.toggle()"></app-header>
+      } @else {
+      <!-- horizontal header -->
+      <app-horizontal-header (toggleMobileNav)="sidenav.toggle()"></app-horizontal-header>
+      } @if(options.horizontal) {
+      <app-horizontal-sidebar></app-horizontal-sidebar>
+      }
+
+      <main class="pageWrapper" [ngClass]="{
+        maxWidth: options.boxed
+      }">
+        <app-breadcrumb></app-breadcrumb>
+        <!-- ============================================================== -->
+        <!-- Outlet -->
+        <!-- ============================================================== -->
+        <router-outlet></router-outlet>
+        <div class="customizerBtn">
+          <button mat-fab color="primary" (click)="customizerRight.toggle()">
+            <mat-icon>settings</mat-icon>
+          </button>
+        </div>
+      </main>
+    </mat-sidenav-content>
+
+    <mat-sidenav #customizerRight mode="over" position="end">
+      <div class="p-x-16 p-y-20 d-flex align-items-center justify-content-between">
+        <h3 class="mat-subtitle-1 f-s-21 f-w-600">Paramètres</h3>
+        <button class="d-lg-none" mat-button (click)="customizerRight.toggle()">
+          Fermer
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+
+      <app-customizer (optionsChange)="receiveOptions($event)"></app-customizer>
+    </mat-sidenav>
+  </mat-sidenav-container>
+
+</span>

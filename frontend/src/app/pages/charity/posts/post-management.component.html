@@ -1,0 +1,158 @@
+<div class="posts-page">
+  <mat-card class="hero-card">
+    <div class="hero-head">
+      <div>
+        <p class="eyebrow">Admin et responsable</p>
+        <h2>Gestion des publications</h2>
+        <p>Créez, mettez à jour et publiez des publications de dons liées aux familles ou aux bénéficiaires.</p>
+      </div>
+
+      <button mat-stroked-button type="button" (click)="refreshData()" [disabled]="isLoading">
+        Actualiser
+      </button>
+    </div>
+  </mat-card>
+
+  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+  <p class="error-text" *ngIf="loadErrorMessage">{{ loadErrorMessage }}</p>
+
+  <div class="content-grid">
+    <mat-card class="composer-card">
+      <mat-card-header>
+        <mat-card-title>{{ isEditing ? 'Modifier la publication' : 'Créer une publication' }}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form class="post-form" [formGroup]="postForm" (ngSubmit)="submitPost()">
+          <mat-form-field appearance="outline">
+            <mat-label>Titre</mat-label>
+            <input matInput formControlName="title" placeholder="Aider les familles dans le besoin" />
+            <mat-error *ngIf="postForm.controls.title.hasError('required')">Le titre est obligatoire.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea
+              matInput
+              rows="5"
+              formControlName="content"
+              placeholder="Décrivez l'objectif et pourquoi les gens devraient soutenir cette campagne."
+            ></textarea>
+            <mat-error *ngIf="postForm.controls.content.hasError('required')">
+              La description est obligatoire.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Objectif de don (USD)</mat-label>
+            <input matInput type="number" min="1" formControlName="donationGoal" />
+            <mat-error *ngIf="postForm.controls.donationGoal.hasError('required')">
+              L'objectif de don est obligatoire.
+            </mat-error>
+            <mat-error *ngIf="postForm.controls.donationGoal.hasError('min')">
+              L'objectif de don doit être supérieur à 0.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Associer à</mat-label>
+            <mat-select formControlName="associationType">
+              <mat-option value="none">Aucun (publication générale)</mat-option>
+              <mat-option value="family">Famille</mat-option>
+              <mat-option value="beneficiary">Bénéficiaire</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="associationTypeControlValue !== 'none'" class="full-width">
+            <mat-label>
+              {{ associationTypeControlValue === 'family' ? 'Sélectionner une famille' : 'Sélectionner un bénéficiaire' }}
+            </mat-label>
+
+            <mat-select formControlName="associationEntityId">
+              <mat-option
+                *ngFor="let entity of associationEntities; trackBy: trackEntityById"
+                [value]="entity._id"
+              >
+                {{ associationEntityLabel(entity) }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="postForm.controls.associationEntityId.hasError('required')">
+              Veuillez sélectionner une option.
+            </mat-error>
+          </mat-form-field>
+
+          <div class="form-actions full-width">
+            <button mat-flat-button color="primary" type="submit" [disabled]="isSubmitting || postForm.invalid">
+              {{ isEditing ? 'Mettre à jour' : 'Créer' }}
+            </button>
+
+            <button mat-stroked-button type="button" (click)="clearForm()" [disabled]="isSubmitting">
+              Réinitialiser le formulaire
+            </button>
+          </div>
+        </form>
+
+        <mat-progress-bar *ngIf="isSubmitting" mode="indeterminate"></mat-progress-bar>
+
+        <p class="success-text" *ngIf="submitSuccessMessage">{{ submitSuccessMessage }}</p>
+        <p class="error-text" *ngIf="submitErrorMessage">{{ submitErrorMessage }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="list-card">
+      <mat-card-header>
+        <mat-card-title>Publications publiées</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="post-list" *ngIf="posts.length; else emptyPosts">
+          <article class="post-item" *ngFor="let post of posts; trackBy: trackPostById">
+            <div class="post-head">
+              <div>
+                <h3>{{ post.title }}</h3>
+                <p>{{ associationLabel(post) }}</p>
+              </div>
+
+              <div class="item-actions">
+                <button mat-stroked-button color="primary" type="button" (click)="editPost(post)">
+                  Modifier
+                </button>
+                <button
+                  mat-stroked-button
+                  color="warn"
+                  type="button"
+                  (click)="deletePost(post)"
+                  [disabled]="isDeleting(post._id)"
+                >
+                  {{ isDeleting(post._id) ? 'Suppression...' : 'Supprimer' }}
+                </button>
+              </div>
+            </div>
+
+            <p class="post-content">{{ post.content }}</p>
+            <p class="post-meta">Publié le {{ formatDate(post.createdAt) }}</p>
+
+            <div class="progress-labels">
+              <span>{{ post.progressPercent }}%</span>
+              <span>
+                {{ formatCurrency(post.amountRaised) }} / {{ formatCurrency(post.donationGoal) }}
+              </span>
+            </div>
+
+            <div class="progress-track" role="progressbar" [attr.aria-valuenow]="post.progressPercent" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-fill" [attr.data-tone]="postProgressTone(post)" [ngStyle]="progressBarStyle(post)"></div>
+            </div>
+          </article>
+        </div>
+
+        <ng-template #emptyPosts>
+          <div class="empty-state">
+            <p>Aucune publication pour le moment.</p>
+          </div>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

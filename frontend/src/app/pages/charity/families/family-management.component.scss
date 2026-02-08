@@ -1,0 +1,198 @@
+.page-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.section-card {
+  border: 1px solid #e0e7ef;
+}
+
+.section-card mat-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+}
+
+.section-card mat-card-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.coordinates-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.actions-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.map-picker-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.info-text {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #607d8b;
+}
+
+.error-text {
+  margin: 0;
+  color: #d32f2f;
+}
+
+.table-tools {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(220px, 280px);
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.search-field,
+.filter-field {
+  width: 100%;
+}
+
+.table-wrapper {
+  overflow: auto;
+}
+
+.charity-material-table {
+  width: 100%;
+  min-width: 1080px;
+}
+
+.primary-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.primary-cell > span {
+  font-size: 12px;
+  color: #607d8b;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.row-actions button {
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.row-actions button:hover {
+  transform: translateY(-1px);
+  background-color: rgba(2, 119, 189, 0.08);
+}
+
+.map-section-card {
+  min-height: auto;
+}
+
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 1.2fr) minmax(320px, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.map-pane {
+  border: 1px solid #e0e7ef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.map-table-pane .charity-material-table {
+  min-width: 520px;
+}
+
+.map-table-pane table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.map-table-pane th,
+.map-table-pane td {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid #eceff1;
+  font-size: 0.88rem;
+}
+
+.map-table-pane th {
+  font-weight: 600;
+  color: #263238;
+  background: #fafcfd;
+}
+
+.empty-cell {
+  text-align: center;
+  color: #78909c;
+}
+
+@media (max-width: 1100px) {
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+
+  .table-tools {
+    grid-template-columns: 1fr;
+  }
+
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .charity-material-table {
+    min-width: 760px;
+  }
+
+  .mat-column-address,
+  .mat-column-numberOfPeople,
+  .mat-column-date_de_naissance,
+  .mat-column-lastVisit,
+  .mat-column-household {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .form-grid,
+  .coordinates-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .charity-material-table {
+    min-width: 520px;
+  }
+
+  .mat-column-aidTypes,
+  .mat-column-visited {
+    display: none;
+  }
+}

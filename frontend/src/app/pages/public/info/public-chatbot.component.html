@@ -1,0 +1,39 @@
+<div class="chatbot-shell">
+  <button
+    type="button"
+    class="launcher"
+    mat-fab
+    color="primary"
+    (click)="toggleWidget()"
+    [attr.aria-label]="isOpen ? 'Fermer le chat assistant' : 'Ouvrir le chat assistant'"
+    [attr.aria-expanded]="isOpen"
+  >
+    <mat-icon>{{ isOpen ? 'close' : 'chat' }}</mat-icon>
+  </button>
+
+  <section class="chat-window" *ngIf="isOpen" role="dialog" aria-label="Assistant Omnia">
+    <header class="chat-header">
+      <div>
+        <p class="title">Assistant Omnia</p>
+        <p class="subtitle">Propulse par HelloTars</p>
+      </div>
+      <button
+        mat-icon-button
+        type="button"
+        (click)="closeWidget()"
+        aria-label="Fermer l'assistant"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </header>
+
+    <iframe
+      class="chat-iframe"
+      title="Assistant Omnia (HelloTars)"
+      [src]="chatUrl"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allow="microphone; autoplay; clipboard-write"
+    ></iframe>
+  </section>
+</div>

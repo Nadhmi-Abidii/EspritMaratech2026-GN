@@ -1,0 +1,9 @@
+<div class="geo-map-wrapper">
+  <div #mapHost class="geo-map" [style.height]="height"></div>
+  <div class="map-hint map-hint-top" *ngIf="selectable">
+    Cliquez sur la carte pour définir les coordonnées.
+  </div>
+  <div class="map-hint" *ngIf="!hasPoints">
+    Aucune donnée de géolocalisation pour le moment. Ajoutez des coordonnées aux familles ou aux visites.
+  </div>
+</div>

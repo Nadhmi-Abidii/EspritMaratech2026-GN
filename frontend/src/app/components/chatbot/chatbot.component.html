@@ -1,0 +1,74 @@
+<div class="chatbot-container">
+  <!-- Chatbot Toggle Button -->
+  <button 
+    class="chatbot-toggle"
+    mat-fab
+    color="primary"
+    (click)="toggleChatbot()"
+    [attr.aria-label]="isOpen ? 'Close chatbot' : 'Open chatbot'">
+    <mat-icon *ngIf="!isOpen">chat</mat-icon>
+    <mat-icon *ngIf="isOpen">close</mat-icon>
+  </button>
+
+  <!-- Chatbot Window -->
+  <div class="chatbot-window" [class.open]="isOpen">
+    <!-- Header -->
+    <div class="chatbot-header">
+      <h3>Omnia Charity Support</h3>
+      <div class="header-actions">
+        <button 
+          mat-icon-button 
+          (click)="clearHistory()"
+          matTooltip="Clear history"
+          [disabled]="messages.length === 0">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button 
+          mat-icon-button 
+          (click)="toggleChatbot()">
+          <mat-icon>minimize</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Messages Container -->
+    <div class="messages-container" #messagesContainer>
+      <div class="message" 
+        *ngFor="let message of messages"
+        [class]="'message-' + message.role">
+        <div class="message-content">
+          <mat-icon class="message-icon" *ngIf="message.role === 'assistant'">smart_toy</mat-icon>
+          <mat-icon class="message-icon" *ngIf="message.role === 'user'">person</mat-icon>
+          
+          <div class="message-text">
+            <p *ngIf="!message.isLoading">{{ message.content }}</p>
+            <div class="loading-spinner" *ngIf="message.isLoading">
+              <mat-spinner diameter="20"></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <span class="message-time">{{ message.timestamp | date:'HH:mm' }}</span>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="input-area">
+      <mat-form-field appearance="outline" class="message-input-field">
+        <input 
+          matInput 
+          [(ngModel)]="userInput"
+          (keyup.enter)="sendMessage()"
+          [disabled]="isLoading"
+          placeholder="Ask me anything...">
+      </mat-form-field>
+      
+      <button 
+        mat-icon-button 
+        color="primary"
+        (click)="sendMessage()"
+        [disabled]="!userInput.trim() || isLoading">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

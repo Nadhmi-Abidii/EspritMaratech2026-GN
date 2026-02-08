@@ -1,0 +1,40 @@
+<ng-container *ngIf="isAdmin; else nonAdminHome">
+  <app-admin-dashboard></app-admin-dashboard>
+</ng-container>
+
+<ng-template #nonAdminHome>
+  <ng-container *ngIf="isVolunteer; else standardHome">
+    <app-volunteer-dashboard></app-volunteer-dashboard>
+  </ng-container>
+</ng-template>
+
+<ng-template #standardHome>
+  <mat-card class="home-intro-card">
+    <mat-card-header>
+      <mat-card-title>Suivi Omnia Charity</mat-card-title>
+      <button mat-stroked-button type="button" (click)="reloadOverview()">
+        Actualiser
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="intro-text">
+        Centralisez le suivi des familles, les dossiers des bénéficiaires, les distributions d'aide
+        et les visites dans un seul tableau de bord opérationnel.
+      </p>
+
+      <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+      <p class="error-text" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="overview-grid">
+    <mat-card *ngFor="let card of cards" class="overview-card">
+      <mat-card-content>
+        <p class="card-title">{{ card.title }}</p>
+        <p class="card-value">{{ card.value }}</p>
+        <p class="card-description">{{ card.description }}</p>
+        <a mat-button color="primary" [routerLink]="[card.route]">Ouvrir {{ card.title }}</a>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-template>

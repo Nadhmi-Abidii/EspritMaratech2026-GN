@@ -1,0 +1,60 @@
+<mat-card class="profile-card">
+  <mat-card-header>
+    <mat-card-title>Mon profil</mat-card-title>
+    <div class="header-actions">
+      <button mat-stroked-button type="button" (click)="loadProfile()">
+        Actualiser
+      </button>
+      <button mat-flat-button color="warn" type="button" (click)="logout()">
+        Déconnexion
+      </button>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <p *ngIf="errorMessage" class="error-text">{{ errorMessage }}</p>
+
+    <div *ngIf="user as currentUser; else noData" class="profile-grid">
+      <div class="field">
+        <span class="label">Nom</span>
+        <span class="value">{{ currentUser.name }}</span>
+      </div>
+
+      <div class="field">
+        <span class="label">E-mail</span>
+        <span class="value">{{ currentUser.email }}</span>
+      </div>
+
+      <div class="field">
+        <span class="label">Rôle</span>
+        <span class="value">{{ roleLabel(currentUser.role) }}</span>
+      </div>
+
+      <div class="field">
+        <span class="label">Statut</span>
+        <span class="value">{{ currentUser.isActive ? 'Actif' : 'Inactif' }}</span>
+      </div>
+
+      <div class="field">
+        <span class="label">ID utilisateur</span>
+        <span class="value">{{ currentUser._id }}</span>
+      </div>
+
+      <div class="field" *ngIf="currentUser.createdAt">
+        <span class="label">Créé le</span>
+        <span class="value">{{ currentUser.createdAt | date: 'medium' }}</span>
+      </div>
+
+      <div class="field" *ngIf="currentUser.updatedAt">
+        <span class="label">Mis à jour le</span>
+        <span class="value">{{ currentUser.updatedAt | date: 'medium' }}</span>
+      </div>
+    </div>
+
+    <ng-template #noData>
+      <p class="muted-text">Aucune donnée de profil disponible.</p>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

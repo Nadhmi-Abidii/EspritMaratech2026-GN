@@ -1,0 +1,65 @@
+.home-intro-card {
+  margin-bottom: 16px;
+  border: 1px solid #e6edf3;
+  background: linear-gradient(130deg, #f7fbf8 0%, #f5f9ff 100%);
+}
+
+.home-intro-card mat-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+}
+
+.home-intro-card mat-card-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.intro-text {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.overview-card {
+  min-height: 190px;
+  border: 1px solid #e5ebf2;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.overview-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(16, 36, 56, 0.08);
+}
+
+.card-title {
+  margin: 0;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.card-value {
+  margin: 8px 0;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.card-description {
+  margin: 0 0 10px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.error-text {
+  margin-top: 10px;
+  color: #d32f2f;
+}
